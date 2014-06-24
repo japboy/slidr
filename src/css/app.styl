@@ -1,0 +1,110 @@
+@import 'nib'
+@import './_helper'
+
+//
+// Variables
+
+bgColor = rgb(255,255,255)
+fgColor = rgb(0,0,0)
+
+
+//
+// Layouts
+
+body
+  background-color bgColor
+  overflow hidden
+
+header
+  absolute top 0 left 0
+  height 100%
+  width 100%
+
+  .title
+    @extend .fade
+    absolute top 40% left 50%
+    color rgba(lighten(fgColor, 50%), 0.8)
+    margin-left -(round(62 / 2))px
+
+#main
+  absolute top 0 left 0
+  height 100%
+  width 100%
+
+  .view
+    absolute top 0 left 0
+
+nav
+  absolute top 0 left 0
+  height 100%
+  width 100%
+
+  .search
+    @extend .fade
+    @extend .position
+    height 34px
+
+    &.position--in
+      absolute top 50% left 50%
+      margin-left -(round(618 / 2))px
+      margin-top 23px
+      width 618px
+
+    &.position--out
+      absolute top 3px left 3px
+      margin-left 0
+      margin-top 0
+      width (round(618 / 3))px
+
+    &__box
+      absolute bottom 0 left 0
+      border-color lighten(fgColor, 50%)
+      border-radius 1px
+      border-style solid
+      border-width 1px
+      height 100%
+      width 100%
+
+    &__input
+      absolute bottom 0 left 0
+      background-color rgba(bgColor, 0.5)
+      border-style none
+      box-sizing border-box
+      font-size 18px
+      height 100%
+      outline-style none
+      padding 0 8px
+      width 100%
+
+footer
+  absolute bottom 0 left 0
+  height 30px
+  text-align right
+  width 100%
+
+.loader
+  absolute top 0 left 0
+  height 100%
+  width 100%
+
+  &__mask
+    @extend .fade
+    background-color bgColor
+    height 100%
+    width 100%
+
+  &__icon
+    @extend .fade
+    absolute top 50% left 50%
+    margin-left -(round(image-size('../img/ajax-loader.gif')[1] / 2))px
+    margin-top -(round(image-size('../img/ajax-loader.gif')[0] / 2))px
+
+
+//
+// Minor fixes
+
+.fb-like
+  top -3px
+
+.twitter-share-button
+  width 87px !important

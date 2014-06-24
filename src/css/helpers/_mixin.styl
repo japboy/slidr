@@ -1,0 +1,23 @@
+@import 'nib'
+
+// Mixin
+
+coord3d(x y z)
+  _matrix = \
+    1,0,0,0, \
+    0,1,0,0, \
+    0,0,1,0, \
+    x,y,z,1
+  transform matrix3d(_matrix)
+
+coord2d(x y)
+  left (x)px
+  top (y)px
+
+text-stroke(offset color)
+  _shadow = \
+    (offset * -1) (offset * -1) 0 color, \
+    offset (offset * -1) 0 color, \
+    (offset * -1) offset 0 color, \
+    offset offset 0 color
+  text-shadow _shadow

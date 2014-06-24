@@ -1,0 +1,19 @@
+doctype html
+html(xmlns:og='http://ogp.me/ns#', xmlns:fb='https://www.facebook.com/2008/fbml')
+  head
+    meta(charset='UTF-8')
+
+    block title
+
+    block meta
+      meta(name='description', content=description)
+      meta(name='keywords', content=keywords)
+
+    block style
+      script(src='./css/preset.min.css', charset='UTF-8')
+
+    block script
+      script(src='./js/preset.min.js', charset='UTF-8', async='async')
+
+  body
+    block body

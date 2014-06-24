@@ -1,0 +1,21 @@
+{
+  "title": "slidr",
+  "author": "Yu I.",
+  "description": "Yet another Tumblr photo viewer.",
+  "url": "http://japboy.github.io/slidr/",
+  "keywords": [
+    "Tumblr",
+    "photo",
+    "slideshow"
+  ],
+  "robots": [
+    "INDEX",
+    "FOLLOW"
+  ],
+  "facebook": {
+    "locale": "en_GB"
+  },
+  "twitter": {
+    "creator": "@japboy"
+  }
+}

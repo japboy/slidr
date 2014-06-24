@@ -1,0 +1,33 @@
+extends _layout
+
+block title
+  title= title
+
+block append meta
+  include _inc_sns_meta
+
+block append style
+  //link(rel='stylesheet', href='./css/sprite.min.css')
+  link(rel='stylesheet', href='./css/app.min.css')
+
+block append script
+  script(src='./js/app.min.js', charset='UTF-8', defer='defer')
+
+block body
+  header
+    h1.title.fade--out slidr
+
+  section#main(role='main')
+    canvas.view
+
+  nav
+    form.search.fade--out.position--in
+      div.search__box
+        input.search__input(type='text', name='keyword', autocomplete='off', tabindex='0')
+
+  footer
+    include _inc_sns_button
+
+  div.loader
+    div.loader__mask.fade--in
+      img.loader__icon.fade--in(src='./img/ajax-loader.gif', alt='loading...', width='16', height='16')
