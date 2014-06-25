@@ -18,11 +18,12 @@ var CONSUMER_KEY = '';
 var clock = helper.clock.create(10000);
 var frame = helper.frame.create();
 
-var tumblr, context;
+var ws, tumblr, context;
 
-function load () {
+function load (data) {
   var dfr, loader, loaderMask, loaderIcon, title, search;
   dfr = Q.defer();
+  ws = data[1];
   loader = d3.select('.loader');
   loaderMask = loader.select('.loader__mask');
   loaderIcon = loaderMask.select('.loader__icon');
@@ -37,6 +38,20 @@ function load () {
     dfr.resolve();
   });
   loaderIcon.classed({ 'fade--in': false, 'fade--out': true });
+  return dfr.promise;
+}
+
+function message () {
+  var dfr, sock;
+  dfr = Q.defer();
+  sock = d3.select(ws);
+  sock.on('message', function (d, i) {
+    var data = ('' === d3.event.data) ? {} : global.JSON.parse(d3.event.data);
+    if (data.slidr) {
+      sock.on('message', null);
+      dfr.resolve(data.slidr);
+    }
+  });
   return dfr.promise;
 }
 
@@ -73,6 +88,7 @@ function submit (query) {
     _.defer(function () {
       input.property('value', query);
       form.classed({ 'position--in': false, 'position--out': true });
+      global.location.hash = '#/' + global.encodeURIComponent(query);
       dfr.resolve(query);
     });
   } else {
@@ -82,6 +98,7 @@ function submit (query) {
       form.on('submit', null);
       form.classed({ 'position--in': false, 'position--out': true });
       global.location.hash = '#/' + global.encodeURIComponent(value);
+      ws.send(global.JSON.stringify({ 'slidr': value }));
       dfr.resolve(value);
     });
   }
@@ -129,7 +146,11 @@ function next () {
 }
 
 function fail (err) {
-  submit().then(cache, fail).then(show, fail);
+  submit()
+    .then(api, fail)
+    .then(cache, fail)
+    .then(show, fail);
+
   console.error(err.message);
 }
 
@@ -148,22 +169,36 @@ function show (images) {
   frame.add(TWEEN.update);
   frame.start();
 
-  var initialFadeIn = new TWEEN.Tween({ x: 100, alpha: 0.0 });
-  initialFadeIn
-  .to({ x: 0, alpha: 1.0 }, 500)
-  .onUpdate(function () {
-    context.set('x', this.x);
-    context.set('alpha', this.alpha);
-  })
-  .onComplete(function () {
-    TWEEN.remove(initialFadeIn);
-  })
-  .start();
+  var initialFadeIn = new TWEEN.Tween({ x: 100, alpha: 0.0 })
+    .to({ x: 0, alpha: 1.0 }, 500)
+    .onUpdate(function () {
+      context.set('x', this.x);
+      context.set('alpha', this.alpha);
+    })
+    .onComplete(function () {
+      TWEEN.remove(initialFadeIn);
+    })
+    .start();
 
   clock.tick();
   bind();
-  hashchange().then(submit, fail).then(api, fail).then(cache, fail).then(show, fail);
-  submit().then(api, fail).then(cache, fail).then(show, fail);
+
+  message()
+    .then(submit, fail)
+    .then(api, fail)
+    .then(cache, fail)
+    .then(show, fail);
+
+  hashchange()
+    .then(submit, fail)
+    .then(api, fail)
+    .then(cache, fail)
+    .then(show, fail);
+
+  submit()
+    .then(api, fail)
+    .then(cache, fail)
+    .then(show, fail);
 
   function bind () {
     next().then(slide).then(bind);
@@ -228,7 +263,7 @@ function init () {
   context.on('lost', frame.stop);
   context.on('restored', frame.start);
 
-  Q.all([ helper.dom(), helper.sleep(1500) ])
+  Q.all([ helper.dom(), helper.ws('wss://wss.jit.su'), helper.sleep(1500) ])
     .then(load, fail)
     .then(hash, fail)
     .then(submit, fail)
