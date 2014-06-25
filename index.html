@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
+  <head>
+    <meta charset="UTF-8">
+    <title>slidr</title>
+    <meta name="description" content="Yet another Tumblr photo viewer.">
+    <meta name="keywords" content="Tumblr,photo,slideshow">
+    <!-- Facebook-->
+    <!-- https://developers.facebook.com/docs/opengraph/creating-object-types/#properties-->
+    <meta property="og:url" content="http://japboy.github.io/slidr/">
+    <meta property="og:title" content="slidr">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:description" content="Yet another Tumblr photo viewer.">
+    <meta property="og:site_name" content="slidr">
+    <!-- Twitter-->
+    <!-- https://dev.twitter.com/docs/cards/markup-reference-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="slidr">
+    <meta name="twitter:description" content="Yet another Tumblr photo viewer.">
+    <meta name="twitter:creator" content="@japboy">
+    <script src="./css/preset.min.css" charset="UTF-8"></script>
+    <!--link(rel='stylesheet', href='./css/sprite.min.css')-->
+    <link rel="stylesheet" href="./css/app.min.css">
+    <script src="./js/preset.min.js" charset="UTF-8" async="async"></script>
+    <script src="./js/app.min.js" charset="UTF-8" defer="defer"></script>
+  </head>
+  <body>
+    <header>
+      <h1 class="title fade--out">slidr</h1>
+    </header>
+    <section id="main" role="main">
+      <canvas class="view"></canvas>
+    </section>
+    <nav>
+      <form class="search fade--out position--in">
+        <div class="search__box">
+          <input type="text" name="keyword" autocomplete="off" tabindex="0" class="search__input">
+        </div>
+      </form>
+    </nav>
+    <footer>
+      <!-- Facebook-->
+      <div data-send="false" data-layout="button_count" data-width="280" class="fb-like"></div>
+      <!-- Twitter--><a href="https://twitter.com/share" data-lang="en" class="twitter-share-button">Tweet</a>
+      <!-- Google +1-->
+      <div data-size="medium" class="g-plusone"></div>
+    </footer>
+    <div class="loader">
+      <div class="loader__mask fade--in"><img src="./img/ajax-loader.gif" alt="loading..." width="16" height="16" class="loader__icon fade--in"></div>
+    </div>
+  </body>
+</html>
